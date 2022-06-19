@@ -6,7 +6,6 @@ import java.awt.*;
 
 
 
-
 public class FlappyBird_Game extends JFrame implements ActionListener
 {
 	private CardLayout layout;
