@@ -1,0 +1,302 @@
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.*;
+import javax.swing.*;
+
+public class SchoolManagement extends JFrame implements ActionListener
+{
+	//private JPanel searchP;
+	private JMenu menu;
+	private static SchoolManagement school;
+	public ArrayList<Student> Students;
+
+	//private JTextField studentSearchList;
+	
+	public SchoolManagement()
+	{
+		Students = new ArrayList<Student>();
+		menu = new JMenu("Student");
+		JMenuItem addItem = new JMenuItem("Add");
+		JMenuItem searchItem = new JMenuItem("Search");
+		JMenuItem deleteItem = new JMenuItem("Delete");
+		addItem.addActionListener(this);
+		searchItem.addActionListener(this);
+		deleteItem.addActionListener(this);
+		menu.add(addItem);
+		menu.add(searchItem);
+		menu.add(deleteItem);
+		
+		menu.setVisible(true);
+		 
+		//Create a menu bar
+		JMenuBar mb=new JMenuBar();
+		mb.add(menu);
+		this.setJMenuBar(mb);
+		this.setSize(600, 600);
+	}
+	
+	
+
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		String input = e.getActionCommand();
+		
+		if (input.equals("Add"))
+		{
+			AddStudents newStudent = new AddStudents(Students);
+		}
+		
+		if (input.equals("Search"))
+		{
+			FindStudents searchStudent = new FindStudents(Students);
+		}
+		
+		if (input.equals("Delete"))
+		{
+			DeleteStudents deleteStudent = new DeleteStudents(Students);
+		}
+	}
+
+	public static void main(String[] args) 
+	{
+		school = new SchoolManagement();
+		school.setSize(800, 800);
+		school.setVisible(true);
+		school.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.*;
+import javax.swing.*;
+
+public class SchoolManagement extends JFrame implements ActionListener
+{
+	//private JPanel searchP;
+	private JMenu menu;
+	private static SchoolManagement school;
+	public ArrayList<Student> Students;
+
+	//private JTextField studentSearchList;
+	
+	public SchoolManagement()
+	{
+		Students = new ArrayList<Student>();
+		menu = new JMenu("Student");
+		JMenuItem addItem = new JMenuItem("Add");
+		JMenuItem searchItem = new JMenuItem("Search");
+		JMenuItem deleteItem = new JMenuItem("Delete");
+		addItem.addActionListener(this);
+		searchItem.addActionListener(this);
+		deleteItem.addActionListener(this);
+		menu.add(addItem);
+		menu.add(searchItem);
+		menu.add(deleteItem);
+		
+		menu.setVisible(true);
+		 
+		//Create a menu bar
+		JMenuBar mb=new JMenuBar();
+		mb.add(menu);
+		this.setJMenuBar(mb);
+		this.setSize(600, 600);
+	}
+	
+	
+
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		String input = e.getActionCommand();
+		
+		if (input.equals("Add"))
+		{
+			AddStudents newStudent = new AddStudents(Students);
+		}
+		
+		if (input.equals("Search"))
+		{
+			FindStudents searchStudent = new FindStudents(Students);
+		}
+		
+		if (input.equals("Delete"))
+		{
+			DeleteStudents deleteStudent = new DeleteStudents(Students);
+		}
+	}
+
+	public static void main(String[] args) 
+	{
+		school = new SchoolManagement();
+		school.setSize(800, 800);
+		school.setVisible(true);
+		school.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+
+//New class for adding students to the system.
+public class AddStudents extends JDialog implements ActionListener
+{
+	private ArrayList<Student> arr;
+	private JPanel p;  
+	private JPanel panel;
+	private JLabel addingStudents;
+	private JTextField firstName;
+	private JTextField lastName;
+	private JTextField ID;
+	private JTextField grade;
+	private JButton newEnter;
+	private JLabel fnameLabel;
+	private JLabel lnameLabel;
+	private JLabel idLabel;
+	private JLabel gradeLabel;
+	private JButton clear;
+	//private JButton edit;
+	// JTable Header 
+    private static final String[] columns = {
+        "First Name", "Last Name", "Student ID", "Grade"
+    };
+    // Create the table model
+    private DefaultTableModel model;
+    // Create the JTable
+    private JTable table;
+	//private ArrayList<Student> Students;
+	
+	public AddStudents(ArrayList<Student> arr)
+	{
+		this.arr = arr;
+		p = new JPanel();
+		panel = new JPanel();
+		//p.setLayout(new GridLayout());
+		
+		addingStudents = new JLabel("Add Student to System");
+		addingStudents.setFont(new Font("Arial", Font.BOLD, 20));
+		panel.add(addingStudents);
+		
+		firstName = new JTextField(6);
+		fnameLabel = new JLabel("First Name:");
+		lastName = new JTextField(6);
+		lnameLabel = new JLabel("Last Name:");
+		ID = new JTextField(4);
+		idLabel = new JLabel("ID:");
+		grade = new JTextField(3);
+		gradeLabel = new JLabel("Grade:");
+		
+		model = new DefaultTableModel(columns, 0);
+		table = new JTable(model);
+		table.setAutoCreateRowSorter(true);
+		
+		newEnter = new JButton("Enter");
+		newEnter.addActionListener(this);
+		
+		clear = new JButton("Clear");
+		clear.addActionListener(this);
+		
+		//edit = new JButton("Edit");
+		//edit.addActionListener(this);	
+
+		p.add(fnameLabel);
+		p.add(firstName);
+		p.add(lnameLabel);
+		p.add(lastName);
+		p.add(idLabel);
+		p.add(ID);
+		p.add(gradeLabel);
+		p.add(grade);
+		p.add(newEnter);
+		p.add(clear);
+		p.add(new JScrollPane(table), BorderLayout.CENTER);
+		
+		p.setBackground(Color.CYAN);
+		panel.setBackground(Color.CYAN);
+		
+		this.add(panel, BorderLayout.NORTH);
+		this.add(p, BorderLayout.CENTER);
+		this.setSize(700, 600);
+		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		this.setVisible(true);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		String fName = firstName.getText();
+		String lName = lastName.getText();
+		String numID = ID.getText();
+		String gradeLevel = grade.getText();
+		String input = e.getActionCommand();
+		
+		
+		if (table.getSelectedRow() != -1 && input.equals("Enter"))
+		{
+			
+			String newFName = (String) model.getValueAt(table.getSelectedRow(), 0);
+
+			Student stud = arr.get(table.getSelectedRow());
+			stud.setFirstName(newFName);
+			
+			String newLName = (String) model.getValueAt(table.getSelectedRow(), 1);
+
+			stud.setLastName(newLName);
+			
+			String newGrade = (String) model.getValueAt(table.getSelectedRow(), 3);
+			
+			stud.setGrade(newGrade);
+			
+			arr.add(table.getSelectedRow(), stud);
+			
+			if (arr.size() > 1)
+			{
+				arr.remove(table.getSelectedRow()+1);
+			}
+			System.out.println(arr.toString());
+		}
+		
+		else if (input.equals("Enter"))
+		{
+			boolean isDup = false;
+			for (int i = 0; i < arr.size(); i++)
+			{
+				if (arr.get(i).getID().equals(numID))
+				{
+					isDup = true;
+					break;
+				}
+			}
+			
+			if (isDup == false)
+			{
+				arr.add(new Student(fName, lName, numID, gradeLevel));
+			}
+			
+			for (int j = 0; j < arr.size(); j++)
+			{	
+				if(j==arr.size()-1 && isDup == false)
+				{
+					model.addRow(
+							new Object[]{
+									arr.get(j).getFirstName(), arr.get(j).getLastName(), 
+									arr.get(j).getID(), arr.get(j).getGrade()
+									}
+							);
+				}
+			}
+			
+		}
+		
+		if (input.equals("Clear"))
+		{
+			firstName.setText("");
+			lastName.setText("");
+			ID.setText("");
+			grade.setText("");
+		}
+		
+		this.setVisible(true);
+	}
